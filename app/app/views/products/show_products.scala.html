@@ -1,0 +1,26 @@
+@(products: List[models.Product])
+
+@main("Lista produktów") {
+  <h1>Lista produktów</h1>
+  
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nazwa</th>
+        <th>Kategoria</th>
+        <th>Cena</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(product <- products) {
+        <tr>
+          <td>@product.id</td>
+          <td>@product.name</td>
+          <td>@product.category</td>
+          <td>@product.price zł</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
