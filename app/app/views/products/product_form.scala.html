@@ -1,0 +1,12 @@
+@(productForm: Form[models.BasicForm])(implicit request: RequestHeader, messages: MessagesProvider)
+
+@main("Produkt - dodawanie") {
+    <h1>Produkt - dodawanie</h1>
+    @helper.form(action = routes.ProductController.add_products) {
+        @helper.CSRF.formField
+        @helper.inputText(productForm("name"), Symbol("_label") -> "Nazwa")
+        @helper.inputText(productForm("category"), Symbol("_label") -> "Kategoria")
+        @helper.inputText(productForm("price"), Symbol("_label") -> "Cena")
+        <input type="submit" value="Stwórz" />
+    }
+}

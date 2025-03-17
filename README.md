@@ -6,3 +6,9 @@ Należy stworzyć aplikację na frameworku Play w Scali 3.
 - 4.5 Należy aplikację uruchomić na dockerze (stworzyć obraz) oraz dodać skrypt uruchamiający aplikację via ngrok (nie podawać tokena ngroka w gotowym rozwiązaniu)
 - 5.0 Należy dodać konfigurację CORS dla dwóch hostów dla metod CRUD
 Kontrolery mogą bazować na listach zamiast baz danych. CRUD: show all, show by id (get), update (put), delete (delete), add (post).
+
+
+# Nawigacja
+- http://localhost:9000
+- http://localhost:9000/products
+- http://localhost:9000/new
