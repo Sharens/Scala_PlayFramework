@@ -1,0 +1,92 @@
+@(product: Option[models.Product])(implicit request: RequestHeader)
+
+@main("Szczegóły produktu") {
+  <div class="container">
+    @product match {
+      case Some(p) => {
+        <div class="product-details">
+          <h1>Szczegóły produktu</h1>
+          
+          <div class="card">
+            <div class="card-header">
+              <h2>@p.name</h2>
+            </div>
+            <div class="card-body">
+              <table class="table">
+                <tr>
+                  <th>ID:</th>
+                  <td>@p.id</td>
+                </tr>
+                <tr>
+                  <th>Nazwa:</th>
+                  <td>@p.name</td>
+                </tr>
+                <tr>
+                  <th>Kategoria:</th>
+                  <td>@p.category</td>
+                </tr>
+                <tr>
+                  <th>Cena:</th>
+                  <td>@p.price zł</td>
+                </tr>
+              </table>
+            </div>
+            <div class="card-footer">
+
+            </div>
+          </div>
+
+          <a href="@routes.HomeController.index" class="btn btn-primary">Powrót do Strony Głównej</a>
+          <a href="@routes.ProductController.show_products" class="btn btn-primary">Powrót do listy produktów</a>
+        </div>
+      }
+      case None => {
+        <div class="alert alert-danger">
+          <h2>Produkt nie został znaleziony</h2>
+          <p>Przepraszamy, ale produkt o podanym ID nie istnieje w naszej bazie.</p>
+          <a href="@routes.ProductController.show_products" class="btn btn-primary">Powrót do listy produktów</a>
+        </div>
+      }
+    }
+  </div>
+  
+  <style>
+    .product-details {
+      margin-top: 20px;
+    }
+    .card {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .card-header {
+      background-color: #f8f9fa;
+      padding: 15px;
+    }
+    .card-body {
+      padding: 20px;
+    }
+    .card-footer {
+      padding: 15px;
+      background-color: #f8f9fa;
+    }
+    .btn {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 8px 15px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
+    .btn-warning {
+      background-color: #ffc107;
+      color: black;
+    }
+    .btn-danger {
+      background-color: #dc3545;
+      color: white;
+    }
+  </style>
+}

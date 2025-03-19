@@ -24,6 +24,10 @@ class ProductController @Inject()(val controllerComponents: ControllerComponents
         Ok(views.html.products.show_products(products))
     }
 
+    def show_single_product(id: Int) = Action { implicit request: Request[AnyContent] =>
+        Ok(views.html.products.show_single_product(products.find(Product => Product.id == id)))
+    }
+
     val productForm: Form[BasicForm] = Form(
         mapping(
             "id" -> default(number, 0),

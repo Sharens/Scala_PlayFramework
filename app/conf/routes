@@ -13,4 +13,5 @@ GET     /hello_world/:name          controllers.HomeController.hello_world(name:
 # Product controllers
 GET     /products                   controllers.ProductController.show_products
 GET     /products/new               controllers.ProductController.product_forms
+GET     /products/:id               controllers.ProductController.show_single_product(id: Int)
 POST    /products                   controllers.ProductController.add_products
