@@ -11,4 +11,4 @@ Kontrolery mogą bazować na listach zamiast baz danych. CRUD: show all, show by
 # Nawigacja
 - http://localhost:9000
 - http://localhost:9000/products
-- http://localhost:9000/new
+- http://localhost:9000/products/new

@@ -26,7 +26,7 @@ class ProductController @Inject()(val controllerComponents: ControllerComponents
 
     val productForm: Form[BasicForm] = Form(
         mapping(
-            "id" -> number,
+            "id" -> default(number, 0),
             "name" -> nonEmptyText,
             "category" -> nonEmptyText,
             "price" -> of[Double].verifying("Cena musi być dodatnia", price => price >= 0.0)
@@ -44,7 +44,8 @@ class ProductController @Inject()(val controllerComponents: ControllerComponents
                 BadRequest(views.html.products.product_form(formWithErrors))
             },
             basicForm => {
-                products = products :+ Product(basicForm.id, basicForm.name, basicForm.category, basicForm.price)
+                val newId = if (products.isEmpty) 1 else products.map(_.id).max + 1
+                products = products :+ Product(newId, basicForm.name, basicForm.category, basicForm.price)
                 Redirect(routes.ProductController.show_products)
             }
         )
