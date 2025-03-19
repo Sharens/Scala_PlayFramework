@@ -1,5 +1,9 @@
 @()
 
-@main("Welcome to Play") {
-  <h1>Welcome to Play!</h1>
+@main("Strona Główna") {
+  <h1>Dostępne widoki:</h1>
+  <ul>
+    <li><a href="@routes.ProductController.show_products">Lista dostępnych produktów</a></li>
+    <li><a href="@routes.ProductController.product_forms">Formularz dodawania produktu</a></li>
+  </ul>
 }
