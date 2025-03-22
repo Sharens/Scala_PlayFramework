@@ -54,4 +54,16 @@ class ProductController @Inject()(val controllerComponents: ControllerComponents
             }
         )
     }
+
+    def delete_product(id: Int) = Action { implicit request: Request[AnyContent] =>
+
+        val productIndex = products.indexWhere(_.id == id)
+
+        if (productIndex >= 0) {
+            products = products.patch(productIndex, Nil, 1)
+            Redirect(routes.ProductController.show_products).flashing("success" -> "Produkt został usunięty")
+        } else {
+            NotFound("Produkt nie został znaleziony")
+        }
+    }
 }
