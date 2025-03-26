@@ -1,0 +1,48 @@
+@(categories: List[models.Category])(implicit request: RequestHeader)
+
+@main("Lista kategorii") {
+  <div class="container">
+    <h1>Lista kategorii</h1>
+    
+    <div class="mb-3">
+      <a href="@routes.CategoryController.newCategory()" class="btn btn-primary">Dodaj nową kategorię</a>
+    </div>
+    
+    @request.flash.get("success").map { message =>
+      <div class="alert alert-success">
+        @message
+      </div>
+    }
+    
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nazwa</th>
+          <th>Opis</th>
+          <th>Akcje</th>
+        </tr>
+      </thead>
+      <tbody>
+      @for(category <- categories) {
+        <tr>
+          <td>@category.id</td>
+          <td>@category.name</td>
+          <td>@category.description</td>
+          <td>
+            <a href="@routes.CategoryController.showCategory(category.id)" class="btn btn-sm btn-info">Szczegóły</a>
+            <a href="@routes.CategoryController.editCategory(category.id)" class="btn btn-sm btn-warning">Edytuj</a>
+            @helper.form(action = routes.CategoryController.deleteCategory(category.id), 'style -> "display: inline;") {
+              @helper.CSRF.formField
+              <button type="submit" class="btn btn-sm btn-danger" 
+                onclick="return confirm('Czy na pewno chcesz usunąć tę kategorię?');">
+                Usuń
+              </button>
+            }
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+  </div>
+}

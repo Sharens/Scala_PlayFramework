@@ -8,7 +8,14 @@ Należy stworzyć aplikację na frameworku Play w Scali 3.
 Kontrolery mogą bazować na listach zamiast baz danych. CRUD: show all, show by id (get), update (put), delete (delete), add (post).
 
 
-# Nawigacja
-- http://localhost:9000
-- http://localhost:9000/products
-- http://localhost:9000/products/new
+## Podstrony produktowe
+- http://localhost:9000 - Strona główna z linkami do wszystkich sekcji
+- http://localhost:9000/products - Lista wszystkich produktów
+- http://localhost:9000/products/new - Formularz dodawania nowego produktu
+- http://localhost:9000/products/1 - Szczegóły produktu o ID 1
+
+## Podstrony kategorii
+- http://localhost:9000/categories - Lista wszystkich kategorii
+- http://localhost:9000/categories/new - Formularz dodawania nowej kategorii
+- http://localhost:9000/categories/1 - Szczegóły kategorii o ID 1
+- http://localhost:9000/categories/1/edit - Formularz edycji kategorii o ID 1

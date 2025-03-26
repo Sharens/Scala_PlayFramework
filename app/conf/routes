@@ -10,9 +10,18 @@ GET     /                           controllers.HomeController.index()
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 GET     /hello_world/:name          controllers.HomeController.hello_world(name: String)
 
-# Product controllers
+# Product routes
 GET     /products                   controllers.ProductController.show_products
 GET     /products/new               controllers.ProductController.product_forms
 GET     /products/:id               controllers.ProductController.show_single_product(id: Int)
 POST    /products                   controllers.ProductController.add_products
 POST    /products/:id/delete        controllers.ProductController.delete_product(id: Int)
+
+# Category routes
+GET     /categories                     controllers.CategoryController.list_categories
+GET     /categories/new                 controllers.CategoryController.new_category
+POST    /categories                     controllers.CategoryController.create_category
+GET     /categories/:id                 controllers.CategoryController.show_single_category(id: Int)
+GET     /categories/:id/edit            controllers.CategoryController.edit_category(id: Int)
+POST    /categories/:id                 controllers.CategoryController.updateCategory(id: Int)
+POST    /categories/:id/delete          controllers.CategoryController.deleteCategory(id: Int)

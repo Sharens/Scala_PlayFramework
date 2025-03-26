@@ -1,0 +1,29 @@
+@(category: models.Category)(implicit request: RequestHeader)
+
+@main("Szczegóły kategorii") {
+  <div class="container">
+    <h1>Szczegóły kategorii</h1>
+    
+    <div class="card">
+      <div class="card-header">
+        <h2>@category.name</h2>
+      </div>
+      <div class="card-body">
+        <p><strong>ID:</strong> @category.id</p>
+        <p><strong>Opis:</strong> @category.description</p>
+      </div>
+      <div class="card-footer">
+        <a href="@routes.CategoryController.listCategories()" class="btn btn-primary">Powrót do listy</a>
+        <a href="@routes.CategoryController.editCategory(category.id)" class="btn btn-warning">Edytuj</a>
+        
+        @helper.form(action = routes.CategoryController.deleteCategory(category.id), 'style -> "display: inline-block;") {
+          @helper.CSRF.formField
+          <button type="submit" class="btn btn-danger" 
+            onclick="return confirm('Czy na pewno chcesz usunąć tę kategorię?');">
+            Usuń
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+}
