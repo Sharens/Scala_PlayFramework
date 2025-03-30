@@ -37,7 +37,11 @@
           </div>
 
           <div style="margin-top: 20px;">
-            @helper.form(action = routes.ProductController.delete_product(p.id), 'method -> "post", 'style -> "display: inline-block; margin-right: 10px; margin-bottom: 10px;") {
+            @helper.form(
+              action = routes.ProductController.delete_product(p.id), 
+              Symbol("method") -> "post", 
+              Symbol("style") -> "display: inline-block; margin-right: 10px; margin-bottom: 10px;"
+            ) {
               @helper.CSRF.formField
               <input type="hidden" name="_method" value="DELETE" />
               <button type="submit" class="btn btn-danger" style="min-width: 120px;"
@@ -45,7 +49,7 @@
                 Usuń produkt
               </button>
             }
-            <a href="@routes.HomeController.index" class="btn btn-primary" style="display: inline-block; margin-right: 10px; margin-bottom: 10px; min-width: 120px;">Powrót do Strony Głównej</a>
+            <a href="@routes.HomeController.index()" class="btn btn-primary" style="display: inline-block; margin-right: 10px; margin-bottom: 10px; min-width: 120px;">Powrót do Strony Głównej</a>
             <a href="@routes.ProductController.show_products" class="btn btn-primary" style="display: inline-block; margin-right: 10px; margin-bottom: 10px; min-width: 120px;">Powrót do listy produktów</a>
           </div>
       }

@@ -29,12 +29,11 @@ class CategoryController @Inject()(val controllerComponents: ControllerComponent
 
 
     def new_category = Action { implicit request: Request[AnyContent] =>
-        implicit val messagesProvider: MessagesProvider = request.flash.messagesProvider 
         Ok(views.html.categories.category_form(categoryForm))
     }
 
     def create_category = Action { implicit request =>
-        categoryForm.bindFromRequest.fold(
+        categoryForm.bindFromRequest().fold(
             formWithErrors => {
                 BadRequest(views.html.categories.category_form(formWithErrors))
             },
@@ -67,7 +66,7 @@ class CategoryController @Inject()(val controllerComponents: ControllerComponent
 
 
   def updateCategory(id: Int) = Action { implicit request =>
-    categoryForm.bindFromRequest.fold(
+    categoryForm.bindFromRequest().fold(
       formWithErrors => {
         BadRequest(views.html.categories.edit_category(id, formWithErrors))
       },
