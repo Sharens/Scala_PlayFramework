@@ -6,7 +6,7 @@
   <div class="container">
     <h1>Edytuj kategorię</h1>
     
-    @form(action = routes.CategoryController.updateCategory(id)) {
+    @form(action = routes.CategoryController.update_category(id)) {
       @CSRF.formField
       <div class="form-group">
         @inputText(categoryForm("name"), Symbol("class") -> "form-control", Symbol("_label") -> "Nazwa kategorii")

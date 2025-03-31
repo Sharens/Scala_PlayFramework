@@ -16,7 +16,8 @@
         <a href="@routes.CategoryController.list_categories" class="btn btn-primary">Powrót do listy</a>
         <a href="@routes.CategoryController.edit_category(category.id)" class="btn btn-warning">Edytuj</a>
         
-        @helper.form(action = routes.CategoryController.deleteCategory(category.id), Symbol("style") -> "display: inline-block;") {
+        @helper.form(action = routes.CategoryController.delete_category(category.id), Symbol("style") -> "display: inline-block;") {
+          @helper.CSRF.formField
           <button type="submit" class="btn btn-danger" 
             onclick="return confirm('Czy na pewno chcesz usunąć tę kategorię?');">
             Usuń

@@ -1,15 +1,15 @@
-@(productForm: Form[models.ProductForm], categories: List[models.Category])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+@(id: Int, productForm: Form[models.ProductForm], categories: List[models.Category])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
 
 @import helper._
 
-@main("Dodaj produkt") {
+@main("Edytuj produkt") {
   <div class="container">
-    <h1>Dodaj nowy produkt</h1>
+    <h1>Edytuj produkt</h1>
     
-    @form(action = routes.ProductController.add_products) {
+    @form(action = routes.ProductController.update_product(id)) {
       @CSRF.formField
       <div class="form-group">
-        @inputText(productForm("name"), Symbol("class") -> "form-control", Symbol("_label") -> "Nazwa produktu", Symbol("placeholder") -> "Podaj nazwę produktu")
+        @inputText(productForm("name"), Symbol("class") -> "form-control", Symbol("_label") -> "Nazwa produktu")
       </div>
       
       <div class="form-group">
@@ -24,14 +24,13 @@
       <div class="form-group">
         @inputText(productForm("price"), 
           Symbol("class") -> "form-control", 
-          Symbol("_label") -> "Cena", 
-          Symbol("placeholder") -> "0.00", 
+          Symbol("_label") -> "Cena",
           Symbol("type") -> "number",
-          Symbol("step") -> "0.01")
+          Symbol("step") -> "0.01")      
       </div>
       
       <div class="form-group mt-3">
-        <button type="submit" class="btn btn-primary">Zapisz</button>
+        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
         <a href="@routes.ProductController.show_products" class="btn btn-secondary">Anuluj</a>
       </div>
 

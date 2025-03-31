@@ -32,7 +32,7 @@
           <td>
             <a href="@routes.CategoryController.show_single_category(category.id)" class="btn btn-sm btn-info">Szczegóły</a>
             <a href="@routes.CategoryController.edit_category(category.id)" class="btn btn-sm btn-warning">Edytuj</a>
-            @helper.form(action = routes.CategoryController.deleteCategory(category.id), Symbol("style") -> "display: inline;") {
+            @helper.form(action = routes.CategoryController.delete_category(category.id), Symbol("style") -> "display: inline;") {
               @helper.CSRF.formField
               <button type="submit" class="btn btn-sm btn-danger" 
                 onclick="return confirm('Czy na pewno chcesz usunąć tę kategorię?');">

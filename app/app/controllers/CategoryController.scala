@@ -49,7 +49,8 @@ class CategoryController @Inject()(val controllerComponents: ControllerComponent
 
     def show_single_category(id: Int) = Action { implicit request: Request[AnyContent] =>
         categories.find(_.id == id) match {
-            case Some(category) => Ok(views.html.categories.show_single_category(category))
+            case Some(category) => 
+                Ok(views.html.categories.show_single_category(category))
             case None => NotFound("Kategoria nie została znaleziona")
         }
     }
@@ -65,7 +66,7 @@ class CategoryController @Inject()(val controllerComponents: ControllerComponent
     }
 
 
-  def updateCategory(id: Int) = Action { implicit request =>
+  def update_category(id: Int) = Action { implicit request =>
     categoryForm.bindFromRequest().fold(
       formWithErrors => {
         BadRequest(views.html.categories.edit_category(id, formWithErrors))
@@ -85,7 +86,7 @@ class CategoryController @Inject()(val controllerComponents: ControllerComponent
     )
   }
 
-  def deleteCategory(id: Int) = Action { implicit request =>
+  def delete_category(id: Int) = Action { implicit request =>
     val categoryIndex = categories.indexWhere(_.id == id)
     
     if (categoryIndex >= 0) {

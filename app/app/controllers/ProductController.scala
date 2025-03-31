@@ -8,11 +8,12 @@ import play.api.data._
 import play.api.data.Forms._
 import play.api.data.format.Formats._ 
 import play.api.data.validation.Constraints._
-import models.Product
-import models.BasicForm
+import models.{Product, ProductForm, Category}
 
 @Singleton
-class ProductController @Inject()(val controllerComponents: ControllerComponents, override val messagesApi: MessagesApi) extends BaseController with I18nSupport {
+class ProductController @Inject()(val controllerComponents: ControllerComponents, 
+                                  val categoryController: CategoryController,
+                                  override val messagesApi: MessagesApi) extends BaseController with I18nSupport {
     
     var products = List(
         Product(1, "Hp Gaming Laptop", "Laptopy", 2137.0),
@@ -25,38 +26,41 @@ class ProductController @Inject()(val controllerComponents: ControllerComponents
     }
 
     def show_single_product(id: Int) = Action { implicit request: Request[AnyContent] =>
-        Ok(views.html.products.show_single_product(products.find(Product => Product.id == id)))
+        // Zwracamy Option[Product] zamiast Product, zgodnie z oczekiwanym typem
+        val productOption = products.find(_.id == id)
+        Ok(views.html.products.show_single_product(productOption))
     }
 
-    val productForm: Form[BasicForm] = Form(
+    val productForm: Form[ProductForm] = Form(
         mapping(
-            "id" -> default(number, 0),
             "name" -> nonEmptyText,
             "category" -> nonEmptyText,
             "price" -> of[Double].verifying("Cena musi być dodatnia", price => price >= 0.0)
-        )(BasicForm.apply)(BasicForm.unapply)
+        )(ProductForm.apply)(ProductForm.unapply)
     )
 
+    // Zmieniono nazwę z product_form na product_forms, aby pasowała do routes
     def product_forms = Action { implicit request: Request[AnyContent] =>
-        Ok(views.html.products.product_form(productForm))
+        val categories = categoryController.categories
+        Ok(views.html.products.product_form(productForm, categories))
     }
 
+    // Zmieniono nazwę z add_product na add_products, aby pasowała do routes
     def add_products = Action { implicit request: Request[AnyContent] =>
-        val productData = productForm.bindFromRequest()
-        productData.fold(
+        val categories = categoryController.categories
+        productForm.bindFromRequest().fold(
             formWithErrors => {
-                BadRequest(views.html.products.product_form(formWithErrors))
+                BadRequest(views.html.products.product_form(formWithErrors, categories))
             },
-            basicForm => {
+            productData => {
                 val newId = if (products.isEmpty) 1 else products.map(_.id).max + 1
-                products = products :+ Product(newId, basicForm.name, basicForm.category, basicForm.price)
-                Redirect(routes.ProductController.show_products)
+                products = products :+ Product(newId, productData.name, productData.category, productData.price)
+                Redirect(routes.ProductController.show_products).flashing("success" -> "Produkt został dodany pomyślnie")
             }
         )
     }
 
     def delete_product(id: Int) = Action { implicit request: Request[AnyContent] =>
-
         val productIndex = products.indexWhere(_.id == id)
 
         if (productIndex >= 0) {
@@ -65,5 +69,36 @@ class ProductController @Inject()(val controllerComponents: ControllerComponents
         } else {
             NotFound("Produkt nie został znaleziony")
         }
+    }
+
+    def edit_product(id: Int) = Action { implicit request =>
+        val categories = categoryController.categories
+        products.find(_.id == id) match {
+            case Some(product) =>
+                val filledForm = productForm.fill(ProductForm(product.name, product.category, product.price))
+                Ok(views.html.products.edit_product(id, filledForm, categories))
+            case None => NotFound("Produkt nie został znaleziony")
+        }
+    }
+
+    def update_product(id: Int) = Action { implicit request =>
+        val categories = categoryController.categories
+        productForm.bindFromRequest().fold(
+            formWithErrors => {
+                BadRequest(views.html.products.edit_product(id, formWithErrors, categories))
+            },
+            productData => {
+                val productIndex = products.indexWhere(_.id == id)
+                
+                if (productIndex >= 0) {
+                    val updatedProduct = Product(id, productData.name, productData.category, productData.price)
+                    products = products.updated(productIndex, updatedProduct)
+                    Redirect(routes.ProductController.show_products)
+                        .flashing("success" -> "Produkt został zaktualizowany")
+                } else {
+                    NotFound("Produkt nie został znaleziony")
+                }
+            }
+        )
     }
 }

@@ -2,10 +2,12 @@
 
 @main("Strona Główna") {
   <h1>Dostępne widoki:</h1>
+  <h1>Produkty:</h1>
   <ul>
     <li><a href="@routes.ProductController.show_products">Lista dostępnych produktów</a></li>
     <li><a href="@routes.ProductController.product_forms">Formularz dodawania produktu</a></li>
     <li><a href="@routes.ProductController.show_single_product(1)">Szczegóły dla konkretnego produktu</a></li>
+    <li><a href="@routes.ProductController.edit_product(1)">Edycja wybranego produktu</a></li>
   </ul>
   
   <h1>Kategorie:</h1>

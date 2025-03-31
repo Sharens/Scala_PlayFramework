@@ -15,6 +15,8 @@ GET     /products                   controllers.ProductController.show_products
 GET     /products/new               controllers.ProductController.product_forms
 GET     /products/:id               controllers.ProductController.show_single_product(id: Int)
 POST    /products                   controllers.ProductController.add_products
+GET     /products/:id/edit          controllers.ProductController.edit_product(id: Int)
+POST    /products/:id/update        controllers.ProductController.update_product(id: Int)
 POST    /products/:id/delete        controllers.ProductController.delete_product(id: Int)
 
 # Category routes
@@ -23,5 +25,5 @@ GET     /categories/new                 controllers.CategoryController.new_categ
 POST    /categories                     controllers.CategoryController.create_category
 GET     /categories/:id                 controllers.CategoryController.show_single_category(id: Int)
 GET     /categories/:id/edit            controllers.CategoryController.edit_category(id: Int)
-POST    /categories/:id                 controllers.CategoryController.updateCategory(id: Int)
-POST    /categories/:id/delete          controllers.CategoryController.deleteCategory(id: Int)
+POST    /categories/:id                 controllers.CategoryController.update_category(id: Int)
+POST    /categories/:id/delete          controllers.CategoryController.delete_category(id: Int)
