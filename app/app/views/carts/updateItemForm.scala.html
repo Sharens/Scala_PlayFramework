@@ -1,0 +1,28 @@
+@(cartId: Int, itemId: Int, cartItemForm: Form[models.CartItemForm])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+
+@import helper._
+
+@main("Aktualizuj ilość") {
+  <div class="container">
+    <h1>Aktualizuj ilość produktu w koszyku #@cartId</h1>
+    
+    @form(action = routes.CartController.updateItem(cartId, itemId)) {
+      @CSRF.formField
+      
+      <input type="hidden" name="productId" value="@cartItemForm("productId").value">
+      
+      <div class="form-group">
+        @inputText(cartItemForm("quantity"), 
+          Symbol("class") -> "form-control", 
+          Symbol("_label") -> "Ilość", 
+          Symbol("type") -> "number",
+          Symbol("min") -> "1")
+      </div>
+      
+      <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+        <a href="@routes.CartController.showCart(cartId)" class="btn btn-secondary">Anuluj</a>
+      </div>
+    }
+  </div>
+}

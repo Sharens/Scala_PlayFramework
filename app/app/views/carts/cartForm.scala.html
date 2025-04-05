@@ -1,0 +1,24 @@
+@(cartForm: Form[models.CartForm])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+
+@import helper._
+
+@main("Utwórz koszyk") {
+  <div class="container">
+    <h1>Utwórz nowy koszyk</h1>
+    
+    @form(action = routes.CartController.createCart) {
+      @CSRF.formField
+      <div class="form-group">
+        @inputText(cartForm("userId"), 
+          Symbol("class") -> "form-control", 
+          Symbol("_label") -> "ID Użytkownika", 
+          Symbol("type") -> "number")
+      </div>
+      
+      <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+        <a href="@routes.CartController.showCarts" class="btn btn-secondary">Anuluj</a>
+      </div>
+    }
+  </div>
+}

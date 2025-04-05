@@ -27,3 +27,16 @@ GET     /categories/:id                 controllers.CategoryController.show_sing
 GET     /categories/:id/edit            controllers.CategoryController.edit_category(id: Int)
 POST    /categories/:id                 controllers.CategoryController.update_category(id: Int)
 POST    /categories/:id/delete          controllers.CategoryController.delete_category(id: Int)
+
+# Cart routes
+GET     /carts                       controllers.CartController.showCarts
+GET     /carts/new                   controllers.CartController.newCart
+GET     /carts/:id                   controllers.CartController.showCart(id: Int)
+POST    /carts                       controllers.CartController.createCart
+GET     /carts/:id/items/add         controllers.CartController.addItemForm(id: Int)
+POST    /carts/:id/items             controllers.CartController.addItem(id: Int)
+GET     /carts/:cartId/items/:itemId/edit  controllers.CartController.updateItemForm(cartId: Int, itemId: Int)
+POST    /carts/:cartId/items/:itemId/update controllers.CartController.updateItem(cartId: Int, itemId: Int)
+POST    /carts/:cartId/items/:itemId/remove controllers.CartController.removeItem(cartId: Int, itemId: Int)
+POST    /carts/:id/clear             controllers.CartController.clearCart(id: Int)
+POST    /carts/:id/delete            controllers.CartController.deleteCart(id: Int)

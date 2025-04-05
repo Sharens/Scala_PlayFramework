@@ -1,0 +1,35 @@
+@(cartId: Int, cartItemForm: Form[models.CartItemForm], products: List[models.Product])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+
+@import helper._
+
+@main("Dodaj produkt do koszyka") {
+  <div class="container">
+    <h1>Dodaj produkt do koszyka #@cartId</h1>
+    
+    @form(action = routes.CartController.addItem(cartId)) {
+      @CSRF.formField
+      <div class="form-group">
+        @select(
+          field = cartItemForm("productId"),
+          options = products.map(p => p.id.toString -> s"${p.name} (${p.price} zł)"),
+          Symbol("class") -> "form-control",
+          Symbol("_label") -> "Produkt"
+        )
+      </div>
+      
+      <div class="form-group">
+        @inputText(cartItemForm("quantity"), 
+          Symbol("class") -> "form-control", 
+          Symbol("_label") -> "Ilość", 
+          Symbol("type") -> "number",
+          Symbol("min") -> "1",
+          Symbol("value") -> "1")
+      </div>
+      
+      <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Dodaj do koszyka</button>
+        <a href="@routes.CartController.showCart(cartId)" class="btn btn-secondary">Anuluj</a>
+      </div>
+    }
+  </div>
+}

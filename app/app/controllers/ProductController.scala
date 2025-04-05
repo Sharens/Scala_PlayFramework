@@ -26,7 +26,7 @@ class ProductController @Inject()(val controllerComponents: ControllerComponents
     }
 
     def show_single_product(id: Int) = Action { implicit request: Request[AnyContent] =>
-        // Zwracamy Option[Product] zamiast Product, zgodnie z oczekiwanym typem
+
         val productOption = products.find(_.id == id)
         Ok(views.html.products.show_single_product(productOption))
     }
@@ -39,13 +39,11 @@ class ProductController @Inject()(val controllerComponents: ControllerComponents
         )(ProductForm.apply)(ProductForm.unapply)
     )
 
-    // Zmieniono nazwę z product_form na product_forms, aby pasowała do routes
     def product_forms = Action { implicit request: Request[AnyContent] =>
         val categories = categoryController.categories
         Ok(views.html.products.product_form(productForm, categories))
     }
 
-    // Zmieniono nazwę z add_product na add_products, aby pasowała do routes
     def add_products = Action { implicit request: Request[AnyContent] =>
         val categories = categoryController.categories
         productForm.bindFromRequest().fold(

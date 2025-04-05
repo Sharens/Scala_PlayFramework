@@ -17,4 +17,12 @@
     <li><a href="@routes.CategoryController.show_single_category(1)">Szczegóły dla konkretnej kategorii</a></li>
     <li><a href="@routes.CategoryController.edit_category(1)">Edycja wybranej kategorii</a></li>
   </ul>
+
+  <h1>Koszyk:</h1>
+  <ul>
+    <li><a href="@routes.CartController.showCarts">Lista wszystkich koszyków</a></li>
+    <li><a href="@routes.CartController.newCart">Utwórz nowy koszyk</a></li>
+    <li><a href="@routes.CartController.showCart(1)">Szczegóły koszyka #1</a></li>
+    <li><a href="@routes.CartController.addItemForm(1)">Dodaj produkt do koszyka #1</a></li>
+  </ul>
 }

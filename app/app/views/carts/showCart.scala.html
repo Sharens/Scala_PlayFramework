@@ -1,0 +1,99 @@
+@(cart: models.Cart)(implicit request: RequestHeader)
+
+@main("Szczegóły koszyka") {
+  <div class="container">
+    <h1>Szczegóły koszyka #@cart.id</h1>
+    
+    @request.flash.get("success").map { message =>
+      <div class="alert alert-success">
+        @message
+      </div>
+    }
+    
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2>Informacje o koszyku</h2>
+      </div>
+      <div class="card-body">
+        <p><strong>ID koszyka:</strong> @cart.id</p>
+        <p><strong>ID użytkownika:</strong> @cart.userId</p>
+        <p><strong>Liczba produktów:</strong> @cart.itemCount</p>
+        <p><strong>Wartość koszyka:</strong> @{f"${cart.totalValue}%.2f"} zł</p>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h2>Produkty w koszyku</h2>
+        <div>
+          <a href="@routes.CartController.addItemForm(cart.id)" class="btn btn-success">Dodaj produkt</a>
+          @helper.form(action = routes.CartController.clearCart(cart.id), Symbol("style") -> "display: inline;") {
+            @helper.CSRF.formField
+            <button type="submit" class="btn btn-warning" 
+              onclick="return confirm('Czy na pewno chcesz wyczyścić koszyk?');">
+              Wyczyść koszyk
+            </button>
+          }
+        </div>
+      </div>
+      <div class="card-body">
+        @if(cart.items.isEmpty) {
+          <div class="alert alert-info">Koszyk jest pusty</div>
+        } else {
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nazwa produktu</th>
+                <th>Ilość</th>
+                <th>Cena jednostkowa</th>
+                <th>Wartość</th>
+                <th>Akcje</th>
+              </tr>
+            </thead>
+            <tbody>
+            @for(item <- cart.items) {
+              <tr>
+                <td>@item.id</td>
+                <td>@item.productName</td>
+                <td>@item.quantity</td>
+                <td>@{f"${item.price}%.2f"} zł</td>
+                <td>@{f"${item.price * item.quantity}%.2f"} zł</td>
+                <td>
+                  <a href="@routes.CartController.updateItemForm(cart.id, item.id)" class="btn btn-sm btn-warning">Zmień ilość</a>
+                  @helper.form(action = routes.CartController.removeItem(cart.id, item.id), Symbol("style") -> "display: inline;") {
+                    @helper.CSRF.formField
+                    <button type="submit" class="btn btn-sm btn-danger" 
+                      onclick="return confirm('Czy na pewno chcesz usunąć ten produkt z koszyka?');">
+                      Usuń
+                    </button>
+                  }
+                </td>
+              </tr>
+            }
+              <tr>
+                <td colspan="4" class="text-end"><strong>Razem:</strong></td>
+                <td><strong>@{f"${cart.totalValue}%.2f"} zł</strong></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        }
+      </div>
+    </div>
+    
+    <div class="mt-4">
+      <a href="@routes.CartController.showCarts" class="btn btn-primary">Powrót do listy koszyków</a>
+      <a href="@routes.HomeController.index()" class="btn btn-secondary">
+        <i class="fa fa-home"></i> Strona główna
+      </a>
+      @helper.form(action = routes.CartController.deleteCart(cart.id), Symbol("style") -> "display: inline;") {
+        @helper.CSRF.formField
+        <button type="submit" class="btn btn-danger" 
+          onclick="return confirm('Czy na pewno chcesz usunąć ten koszyk?');">
+          Usuń koszyk
+        </button>
+      }
+    </div>
+  </div>
+}
