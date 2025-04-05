@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    ports:
+      - "9000:9000"
+    environment:
+      - APPLICATION_SECRET=changeme
+    # volumes:
+    #   - ./app:/app/app
+    #   - ./conf:/app/conf
+    #   - ./public:/app/public
+    restart: unless-stopped

@@ -4,3 +4,30 @@ project
 target
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Katalogi tymczasowe
+logs/
+target/
+.idea/
+.bsp/
+.bloop/
+.metals/
+project/project/
+project/target/
+project/.bloop/
+
+# Pliki tymczasowe
+*.log
+*.class
+*.tmp
+
+# Pliki konfiguracyjne z danymi wrażliwymi
+.env
+ngrok.yml
+
+# Pliki systemowe
+.DS_Store
+Thumbs.db
+
+# Pliki Docker
+.dockerignore
